@@ -3,22 +3,38 @@ package com;
 import lombok.Data;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @RestController
 @RequestMapping(value = "hello")
+@EnableDiscoveryClient
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
     }
 
-    @GetMapping(value = "/{firstName}")
+    public String helloRemoteServiceCall(String firstName, String lastName){
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseExchange=
+                restTemplate.exchange(
+                        "http://logical-service-id/name" +  "{firstName}/{lastName}",
+                        HttpMethod.GET, null, String.class, firstName, lastName);
+        return responseExchange.getBody();
+    }
+
+    @GetMapping(value = "/{firstName}/{lastName}")
     public String helloGet(
             @PathVariable("firstName") String firstName,
-            @RequestParam("lastName") String lastName) {
-        return String.format("{\"message\":\"Hello %s %s\"}", firstName, lastName);
+            @PathVariable("lastName") String lastName) {
+        return
+                helloRemoteServiceCall(firstName, lastName);
     }
+    
 }
 @Data
 class HelloRequest{
