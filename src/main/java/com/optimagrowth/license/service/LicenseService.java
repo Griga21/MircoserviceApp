@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.Locale;
 import java.util.Random;
 
-import static com.sun.org.apache.xml.internal.serializer.utils.Utils.messages;
 
 @Service
 public class LicenseService {
@@ -39,7 +38,7 @@ public class LicenseService {
         return  responseMessage;
     }
 
-    public String updateLicense(License license, String organizationId, Locale locale){
+    public String updateLicense(License license, String organizationId){
         String responseMessage = null;
         if (license!=null){
             license.setOrganizationId(organizationId);
@@ -48,7 +47,7 @@ public class LicenseService {
         return responseMessage;
     }
 
-    public String deleteLicense(String licenseId, String organizationId, Locale locale){
+    public String deleteLicense(String licenseId, String organizationId){
         String responseMessage = null;
         responseMessage = String.format(messages.getMessage("license.delete.message", null, null),licenseId, organizationId);
         return responseMessage;
