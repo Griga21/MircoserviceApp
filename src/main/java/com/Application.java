@@ -40,5 +40,4 @@ public class Application {
 class HelloRequest{
     private String firstName;
     private String lastName;
-    private String adress;
 }
