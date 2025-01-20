@@ -1,9 +1,8 @@
-package com;
+package com.study;
 
 import lombok.Data;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @RestController
 @RequestMapping(value = "hello")
-@EnableDiscoveryClient
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class);
@@ -36,8 +34,4 @@ public class Application {
     }
     
 }
-@Data
-class HelloRequest{
-    private String firstName;
-    private String lastName;
-}
+

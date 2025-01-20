@@ -9,16 +9,16 @@
     </parent>
     <groupId>org.example</groupId>
     <artifactId>MircoserviceApp</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>MircoserviceApp Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
     <properties>
-        <java.version>8</java.version>
-        <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <java.version>17</java.version>
         <docker.image.prefix>ostock</docker.image.prefix>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,9 +60,11 @@
             <!-- This plugin is used to create a docker image and publish the image to docker hub-->
             <plugin>
                 <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.2.2</version>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.13</version>
                 <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
                     <buildArgs>
                         <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
